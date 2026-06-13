@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>S05-Overlay Dashboard</title>
+<style>
+  :root{--bg:#0d1117;--card:#161b22;--bd:#30363d;--tx:#e6edf3;--mut:#8b949e;
+        --grn:#3fb950;--red:#f85149;--blu:#58a6ff;--amb:#d29922}
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{background:var(--bg);color:var(--tx);font:15px/1.5 -apple-system,Segoe UI,Roboto,sans-serif;padding:16px;max-width:760px;margin:auto}
+  h1{font-size:20px;margin-bottom:2px}
+  .sub{color:var(--mut);font-size:13px;margin-bottom:16px}
+  .card{background:var(--card);border:1px solid var(--bd);border-radius:12px;padding:16px;margin-bottom:14px}
+  .regime{font-size:17px;font-weight:600}
+  .up{color:var(--grn)} .down{color:var(--red)} .mut{color:var(--mut)}
+  .grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:10px}
+  .stat{background:var(--bg);border:1px solid var(--bd);border-radius:8px;padding:10px}
+  .stat b{display:block;font-size:19px} .stat span{color:var(--mut);font-size:12px}
+  .sec-title{font-size:13px;text-transform:uppercase;letter-spacing:.5px;color:var(--mut);margin:4px 0 8px}
+  .row{display:flex;justify-content:space-between;align-items:center;padding:9px 0;border-bottom:1px solid var(--bd)}
+  .row:last-child{border:0}
+  .tk{font-weight:600} .meta{color:var(--mut);font-size:12px}
+  .pill{font-size:11px;padding:2px 8px;border-radius:20px;font-weight:600}
+  .pill.b{background:rgba(63,185,80,.15);color:var(--grn)}
+  .pill.s{background:rgba(248,81,73,.15);color:var(--red)}
+  .empty{color:var(--mut);text-align:center;padding:18px}
+  .foot{color:var(--mut);font-size:11px;text-align:center;margin-top:18px;line-height:1.6}
+</style>
+</head>
+<body>
+  <h1>📊 S05-Overlay</h1>
+  <div class="sub" id="date">loading…</div>
+
+  <div class="card">
+    <div class="regime" id="regime">—</div>
+    <div class="grid">
+      <div class="stat"><b id="nifty">—</b><span>Nifty 50</span></div>
+      <div class="stat"><b id="dma">—</b><span>200-DMA</span></div>
+      <div class="stat"><b id="slots">—</b><span>Positions / Slots</span></div>
+      <div class="stat"><b id="cash">—</b><span>Idle cash</span></div>
+    </div>
+  </div>
+
+  <div class="card" id="cash-card" style="border-left:4px solid var(--amb)">
+    <div class="sec-title">💰 Aaj Cash Kahan Rakho</div>
+    <div style="font-size:18px;font-weight:700" id="cash-where">—</div>
+    <div style="font-size:22px;font-weight:800;margin:4px 0" id="cash-amt">—</div>
+    <div class="meta" id="cash-why" style="line-height:1.5"></div>
+    <div class="meta" id="cash-note" style="margin-top:6px;color:var(--blu)"></div>
+  </div>
+
+  <div class="card" id="ai-card" style="display:none">
+    <div class="sec-title">🤖 AI Analysis</div>
+    <div id="commentary" style="line-height:1.6"></div>
+  </div>
+
+  <div class="card">
+    <div class="sec-title">🟢 Buy Today</div>
+    <div id="buys"><div class="empty">—</div></div>
+  </div>
+  <div class="card">
+    <div class="sec-title">🔴 Sell Today</div>
+    <div id="sells"><div class="empty">—</div></div>
+  </div>
+
+  <!-- ============ MERA PORTFOLIO (manual tracker) ============ -->
+  <div class="card">
+    <div class="sec-title">📋 Mera Portfolio</div>
+
+    <!-- add form -->
+    <div style="display:grid;grid-template-columns:1.4fr 1fr 1fr auto;gap:8px;margin-bottom:12px">
+      <input id="p-sym"  placeholder="Stock (e.g. DIXON)" style="text-transform:uppercase">
+      <input id="p-qty"  placeholder="Shares" type="number" min="1">
+      <input id="p-buy"  placeholder="Buy price ₹" type="number" min="0" step="0.05">
+      <button onclick="addPos()" style="background:var(--grn)">+ Buy</button>
+    </div>
+
+    <!-- holdings table -->
+    <div id="pf-rows"></div>
+
+    <!-- totals -->
+    <div class="grid" style="margin-top:12px">
+      <div class="stat"><b id="pf-value">₹0</b><span>Total Account Value</span></div>
+      <div class="stat"><b id="pf-pnl">₹0</b><span>Open P&amp;L (unrealized)</span></div>
+      <div class="stat"><b id="pf-invested">₹0</b><span>In Positions</span></div>
+      <div class="stat"><b id="pf-cash">₹0</b><span>Idle Cash</span></div>
+      <div class="stat"><b id="pf-count">0 / 5</b><span>Open Positions</span></div>
+    </div>
+
+    <div class="sec-title" style="margin-top:16px">📈 Closed Trades (Realized)</div>
+    <div class="grid" style="margin-bottom:10px">
+      <div class="stat"><b id="realized">₹0</b><span>Total Realized P&amp;L</span></div>
+      <div class="stat"><b id="winrate">—</b><span>Win Rate</span></div>
+    </div>
+    <div id="closed-rows"></div>
+
+    <!-- ready-to-paste json -->
+    <div class="sec-title" style="margin-top:16px">📄 portfolio.json (GitHub pe paste karo)</div>
+    <textarea id="pf-json" readonly style="width:100%;height:150px;background:var(--bg);
+      color:var(--tx);border:1px solid var(--bd);border-radius:8px;padding:10px;font-family:monospace;font-size:12px"></textarea>
+    <button onclick="copyJson()" style="background:var(--blu);margin-top:8px;width:100%">📋 Copy — phir GitHub pe portfolio.json mein paste</button>
+    <div class="meta" id="copy-msg" style="text-align:center;margin-top:6px"></div>
+  </div>
+
+<script>
+const CAPITAL = 50000, MAX_POS = 5;
+let PF = {};        // open positions {SYM:{shares,buy,stop}}
+let CLOSED = [];    // closed trades [{sym,shares,buy,sell,pnl,pct,date}]
+let PRICES = {};
+
+try { PF = JSON.parse(localStorage.getItem('s05_pf') || '{}'); } catch(e){ PF = {}; }
+try { CLOSED = JSON.parse(localStorage.getItem('s05_closed') || '[]'); } catch(e){ CLOSED = []; }
+
+function save(){
+  try{ localStorage.setItem('s05_pf', JSON.stringify(PF));
+       localStorage.setItem('s05_closed', JSON.stringify(CLOSED)); }catch(e){}
+  renderPF();
+}
+
+function addPos(){
+  const s=(document.getElementById('p-sym').value||'').trim().toUpperCase();
+  const q=parseInt(document.getElementById('p-qty').value);
+  const b=parseFloat(document.getElementById('p-buy').value);
+  if(!s||!q||!b){ alert('Stock, shares, aur buy price — teeno bharo'); return; }
+  PF[s]={shares:q,buy:b,stop:+(b*0.88).toFixed(2),date:new Date().toISOString().slice(0,10)};
+  document.getElementById('p-sym').value='';
+  document.getElementById('p-qty').value='';
+  document.getElementById('p-buy').value='';
+  save();
+}
+
+function sellPos(s){
+  const p=PF[s];
+  const def = PRICES[s] || p.buy;
+  const sp = prompt(`${s} kis price pe becha? (₹)`, def);
+  if(sp===null) return;
+  const sell=parseFloat(sp);
+  if(!sell||sell<=0){ alert('Sahi price daalo'); return; }
+  const pnl=(sell-p.buy)*p.shares;
+  const pct=((sell/p.buy-1)*100);
+  CLOSED.unshift({sym:s,shares:p.shares,buy:p.buy,sell:sell,
+                  pnl:Math.round(pnl),pct:+pct.toFixed(1),
+                  bdate:p.date||'-',sdate:new Date().toISOString().slice(0,10)});
+  delete PF[s];
+  save();
+}
+
+function delClosed(i){ if(confirm('History se ye trade hatana hai?')){ CLOSED.splice(i,1); save(); } }
+
+function renderPF(){
+  const rows=document.getElementById('pf-rows');
+  const syms=Object.keys(PF);
+  if(!syms.length){ rows.innerHTML='<div class="empty">Koi open position nahi.</div>'; }
+  else {
+    rows.innerHTML=syms.map(s=>{
+      const p=PF[s], ltp=PRICES[s];
+      const pnl=ltp?(ltp-p.buy)*p.shares:null;
+      const pct=ltp?((ltp/p.buy-1)*100).toFixed(1):'—';
+      const col=pnl==null?'var(--mut)':(pnl>=0?'var(--grn)':'var(--red)');
+      return `<div class="row">
+        <div><span class="tk">${s}</span><br>
+          <span class="meta">${p.shares} sh @ ₹${p.buy} · stop ₹${p.stop}${ltp?` · LTP ₹${ltp}`:''}</span></div>
+        <div style="text-align:right">
+          <div style="color:${col};font-weight:600">${pnl==null?'(LTP n/a)':(pnl>=0?'+':'')+'₹'+Math.round(pnl).toLocaleString('en-IN')+' ('+pct+'%)'}</div>
+          <button onclick="sellPos('${s}')" style="background:var(--red);font-size:11px;padding:3px 10px;margin-top:4px">Sell @ price</button>
+        </div></div>`;
+    }).join('');
+  }
+  const invested=syms.reduce((a,s)=>a+PF[s].shares*PF[s].buy,0);
+  const unreal=syms.reduce((a,s)=>a+(PRICES[s]?(PRICES[s]-PF[s].buy)*PF[s].shares:0),0);
+  const realizedPnl=CLOSED.reduce((a,t)=>a+t.pnl,0);
+  // running capital reflects realized gains/losses; cash = running capital - money tied in open positions
+  const runningCapital=CAPITAL+realizedPnl;
+  const cash=runningCapital-invested;
+  document.getElementById('pf-invested').textContent='₹'+Math.round(invested).toLocaleString('en-IN');
+  const pe=document.getElementById('pf-pnl');
+  pe.textContent=(unreal>=0?'+':'')+'₹'+Math.round(unreal).toLocaleString('en-IN');
+  pe.style.color=unreal>=0?'var(--grn)':'var(--red)';
+  document.getElementById('pf-cash').textContent='₹'+Math.round(cash).toLocaleString('en-IN');
+  // total account value = idle cash + current market value of open positions
+  const openMktVal=syms.reduce((a,s)=>a+(PRICES[s]?PRICES[s]*PF[s].shares:PF[s].shares*PF[s].buy),0);
+  const totalVal=cash+openMktVal;
+  const tv=document.getElementById('pf-value');
+  tv.textContent='₹'+Math.round(totalVal).toLocaleString('en-IN');
+  tv.style.color=totalVal>=CAPITAL?'var(--grn)':'var(--red)';
+  document.getElementById('pf-count').textContent=syms.length+' / '+MAX_POS;
+
+  // closed trades history
+  const ch=document.getElementById('closed-rows');
+  if(!CLOSED.length){ ch.innerHTML='<div class="empty">Abhi koi closed trade nahi.</div>'; }
+  else {
+    ch.innerHTML=CLOSED.map((t,i)=>{
+      const col=t.pnl>=0?'var(--grn)':'var(--red)';
+      return `<div class="row">
+        <div><span class="tk">${t.sym}</span> <span class="meta">${t.shares} sh</span><br>
+          <span class="meta">₹${t.buy} → ₹${t.sell} · ${t.bdate} → ${t.sdate}</span></div>
+        <div style="text-align:right">
+          <div style="color:${col};font-weight:600">${t.pnl>=0?'+':''}₹${t.pnl.toLocaleString('en-IN')} (${t.pct}%)</div>
+          <button onclick="delClosed(${i})" style="background:var(--bd);font-size:10px;padding:2px 8px;margin-top:4px">✕</button>
+        </div></div>`;
+    }).join('');
+  }
+  // realized stats
+  const real=CLOSED.reduce((a,t)=>a+t.pnl,0);
+  const wins=CLOSED.filter(t=>t.pnl>0).length;
+  const wr=CLOSED.length?Math.round(wins/CLOSED.length*100):0;
+  const re=document.getElementById('realized');
+  re.textContent=(real>=0?'+':'')+'₹'+real.toLocaleString('en-IN');
+  re.style.color=real>=0?'var(--grn)':'var(--red)';
+  document.getElementById('winrate').textContent=CLOSED.length?(wr+'% ('+wins+'/'+CLOSED.length+')'):'—';
+
+  // portfolio.json text (open positions only)
+  const positions={};
+  syms.forEach(s=>{positions[s]={shares:PF[s].shares,entry_price:PF[s].buy,stop:PF[s].stop};});
+  document.getElementById('pf-json').value=JSON.stringify({capital:CAPITAL,positions:positions},null,2);
+}
+
+function copyJson(){
+  const t=document.getElementById('pf-json'); t.select();
+  navigator.clipboard.writeText(t.value).then(()=>{
+    document.getElementById('copy-msg').textContent='✅ Copy! Ab GitHub → portfolio.json → ✏️ → sab hata ke paste → Commit';
+  }).catch(()=>{document.execCommand('copy');document.getElementById('copy-msg').textContent='✅ Copy ho gaya!';});
+}
+renderPF();
+</script>
+
+  <div class="foot">
+    Updates automatically each trading day via GitHub Actions.<br/>
+    Signals only — execute orders yourself. Not investment advice.
+  </div>
+
+<script>
+fetch('signals.json?_=' + Date.now())
+  .then(r => r.json())
+  .then(d => {
+    document.getElementById('date').textContent = 'As of ' + d.date;
+    const reg = document.getElementById('regime');
+    reg.textContent = 'Market: ' + d.regime;
+    reg.className = 'regime ' + (d.regime_up ? 'up' : 'down');
+    document.getElementById('nifty').textContent = Number(d.nifty).toLocaleString('en-IN');
+    document.getElementById('dma').textContent = Number(d.nifty_200dma).toLocaleString('en-IN');
+    document.getElementById('slots').textContent = d.positions_held + ' / ' + (d.positions_held + d.free_slots);
+    document.getElementById('cash').textContent = '₹' + Number(d.idle_cash).toLocaleString('en-IN');
+    const ca = d.cash_action || {};
+    const parked = (d.cash_after_buys != null ? d.cash_after_buys : d.idle_cash);
+    document.getElementById('cash-where').textContent = ca.where || '—';
+    document.getElementById('cash-amt').textContent = '₹' + Number(parked).toLocaleString('en-IN');
+    document.getElementById('cash-why').textContent = ca.why || '';
+    document.getElementById('cash-note').textContent = ca.note ? ('↳ ' + ca.note) : '';
+    const cc = document.getElementById('cash-card');
+    cc.style.borderLeftColor = d.regime_up ? 'var(--grn)' : 'var(--amb)';
+
+    if (d.commentary) {
+      document.getElementById('commentary').textContent = d.commentary;
+      document.getElementById('ai-card').style.display = 'block';
+    }
+
+    const buys = document.getElementById('buys');
+    if (d.buys && d.buys.length) {
+      buys.innerHTML = d.buys.map(b =>
+        `<div class="row"><div><span class="tk">${b.symbol}</span>
+         <span class="pill b">BUY ${b.shares}</span><br>
+         <span class="meta">@ ₹${b.price} · stop ₹${b.stop} · mom ${b.momentum_6m}%</span></div>
+         <div class="tk">₹${Number(b.value).toLocaleString('en-IN')}</div></div>`).join('');
+    } else buys.innerHTML = '<div class="empty">No buys — '+(d.regime_up?'no qualifying setups':'regime defensive')+'</div>';
+
+    const sells = document.getElementById('sells');
+    if (d.sells && d.sells.length) {
+      sells.innerHTML = d.sells.map(s =>
+        `<div class="row"><div><span class="tk">${s.symbol}</span>
+         <span class="pill s">SELL</span><br>
+         <span class="meta">@ ₹${s.price} · P&L ${s.pnl_pct}% · ${s.reason}</span></div></div>`).join('');
+    } else sells.innerHTML = '<div class="empty">No sells</div>';
+
+    // feed latest prices into the portfolio tracker for live P&L
+    try {
+      (d.buys||[]).forEach(b=>{ if(b.price) PRICES[b.symbol]=b.price; });
+      (d.sells||[]).forEach(s=>{ if(s.price) PRICES[s.symbol]=s.price; });
+      if (typeof renderPF==='function') renderPF();
+    } catch(e){}
+  })
+  .catch(e => { document.getElementById('date').textContent = 'No signals.json yet — run the workflow once.'; });
+</script>
+</body>
+</html>
