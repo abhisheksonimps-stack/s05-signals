@@ -1,0 +1,28 @@
+name: S05 Daily Signals
+on:
+  schedule:
+    - cron: '30 4 * * 1-5'      # 10:00 IST (04:30 UTC), Mon-Fri — after market open
+  workflow_dispatch:             # manual run button bhi
+permissions:
+  contents: write                # signals.json wapas commit karne ke liye
+jobs:
+  signals:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with: { python-version: '3.12' }
+      - run: pip install yfinance pandas numpy
+      - name: Generate signals
+        env:
+          TELEGRAM_TOKEN: ${{ secrets.TELEGRAM_TOKEN }}
+          TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+          CAPITAL: ${{ vars.CAPITAL }}
+        run: python daily_signals.py
+      - name: Commit results
+        run: |
+          git config user.name "s05-bot"
+          git config user.email "bot@users.noreply.github.com"
+          git add signals.json signals_history.json portfolio.json 2>/dev/null || true
+          git commit -m "signals $(date -u +%Y-%m-%d)" || echo "no changes"
+          git push || echo "push skipped"
