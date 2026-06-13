@@ -1,5 +1,10 @@
 {
-  "_comment": "Apne holdings yahan rakho. Jab BUY karo, yahan add karo; SELL karo to hata do.",
   "capital": 50000,
-  "positions": {}
+  "positions": {
+    "RELIANCE": {
+      "shares": 10,
+      "entry_price": 1600,
+      "stop": 1408
+    }
+  }
 }
