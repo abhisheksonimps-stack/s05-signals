@@ -6,8 +6,8 @@
   "free_slots": 5,
   "buys": [],
   "sells": [],
-  "idle_cash": 50000,
+  "idle_cash": 50000.0,
   "overlay": "Liquid fund / short-duration gilt",
-  "nifty": 23591.3,
-  "nifty_200dma": 24879.6
+  "nifty": 23622.9,
+  "nifty_200dma": 24913.0
 }
