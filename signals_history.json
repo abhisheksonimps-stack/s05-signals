@@ -78,5 +78,25 @@
     "nifty": 24043.8,
     "nifty_200dma": 24899.7,
     "commentary": "Market downtrend mein hai \u2014 Nifty (24,044) apne 200-DMA (24,900) se 3.4% neeche. System ne sahi cash bachaya hai; momentum systems mein bear market ka matlab nuksaan se bachna hai. Jab tak Nifty 200-DMA paar nahi karta, koi naya buy nahi aayega \u2014 cash bhi ek position hai."
+  },
+  {
+    "date": "2026-06-18",
+    "regime": "DOWN \ud83d\uded1 (no new buys \u2014 cash defensive)",
+    "regime_up": false,
+    "positions_held": 0,
+    "free_slots": 5,
+    "buys": [],
+    "sells": [],
+    "idle_cash": 50000.0,
+    "cash_after_buys": 50000.0,
+    "cash_action": {
+      "where": "Liquid Fund / Short-duration Gilt",
+      "why": "Market DOWN hai \u2014 capital surakshit rakho, ETF nahi. ~6% milega, kabhi bhi nikal sakte ho.",
+      "note": "Jab Nifty 200-DMA paar kare, tab NIFTYBEES mein shift karna."
+    },
+    "overlay": "Liquid fund / short-duration gilt",
+    "nifty": 24084.4,
+    "nifty_200dma": 24897.8,
+    "commentary": "Market downtrend mein hai \u2014 Nifty (24,084) apne 200-DMA (24,898) se 3.3% neeche. System ne sahi cash bachaya hai; momentum systems mein bear market ka matlab nuksaan se bachna hai. Jab tak Nifty 200-DMA paar nahi karta, koi naya buy nahi aayega \u2014 cash bhi ek position hai."
   }
 ]
