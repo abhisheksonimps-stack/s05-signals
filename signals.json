@@ -1,5 +1,5 @@
 {
-  "date": "2026-07-23",
+  "date": "2026-07-24",
   "regime": "DOWN \ud83d\uded1 (no new buys \u2014 cash defensive)",
   "regime_up": false,
   "positions_held": 0,
@@ -14,7 +14,7 @@
     "note": "Jab Nifty 200-DMA paar kare, tab NIFTYBEES mein shift karna."
   },
   "overlay": "Liquid fund / short-duration gilt",
-  "nifty": 23897.0,
-  "nifty_200dma": 24795.2,
-  "commentary": "Market downtrend mein hai \u2014 Nifty (23,897) apne 200-DMA (24,795) se 3.6% neeche. System ne sahi cash bachaya hai; momentum systems mein bear market ka matlab nuksaan se bachna hai. Jab tak Nifty 200-DMA paar nahi karta, koi naya buy nahi aayega \u2014 cash bhi ek position hai."
+  "nifty": 23766.1,
+  "nifty_200dma": 24788.5,
+  "commentary": "Market downtrend mein hai \u2014 Nifty (23,766) apne 200-DMA (24,788) se 4.1% neeche. System ne sahi cash bachaya hai; momentum systems mein bear market ka matlab nuksaan se bachna hai. Jab tak Nifty 200-DMA paar nahi karta, koi naya buy nahi aayega \u2014 cash bhi ek position hai."
 }
