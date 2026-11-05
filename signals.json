@@ -1,7 +1,7 @@
 {
-  "date": "2026-11-04",
-  "regime": "DOWN \ud83d\uded1 (no new buys \u2014 cash defensive)",
-  "regime_up": false,
+  "date": "2026-11-05",
+  "regime": "UP \u2705 (trades allowed)",
+  "regime_up": true,
   "positions_held": 0,
   "free_slots": 5,
   "buys": [],
@@ -9,12 +9,12 @@
   "idle_cash": 50000.0,
   "cash_after_buys": 50000.0,
   "cash_action": {
-    "where": "Liquid Fund / Short-duration Gilt",
-    "why": "Market DOWN hai \u2014 capital surakshit rakho, ETF nahi. ~6% milega, kabhi bhi nikal sakte ho.",
-    "note": "Jab Nifty 200-DMA paar kare, tab NIFTYBEES mein shift karna."
+    "where": "NIFTYBEES (Nifty 50 ETF)",
+    "why": "Market UP hai \u2014 idle cash ETF mein rakho taaki market ke saath badhe (overlay).",
+    "note": "Jab agla stock BUY signal aaye, utna NIFTYBEES bech ke stock kharidna."
   },
-  "overlay": "Liquid fund / short-duration gilt",
-  "nifty": 23960.6,
-  "nifty_200dma": 24008.1,
-  "commentary": "Market downtrend mein hai \u2014 Nifty (23,961) apne 200-DMA (24,008) se 0.2% neeche. System ne sahi cash bachaya hai; momentum systems mein bear market ka matlab nuksaan se bachna hai. Jab tak Nifty 200-DMA paar nahi karta, koi naya buy nahi aayega \u2014 cash bhi ek position hai."
+  "overlay": "NIFTYBEES",
+  "nifty": 24536.6,
+  "nifty_200dma": 24002.1,
+  "commentary": "Market uptrend mein hai (Nifty 200-DMA se +2.2%) par aaj koi naya qualifying setup nahi \u2014 0 position hold karo. Naye signal ka intezaar; force karke trade mat dhoondo."
 }
