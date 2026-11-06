@@ -2018,5 +2018,25 @@
     "nifty": 24536.6,
     "nifty_200dma": 24002.1,
     "commentary": "Market uptrend mein hai (Nifty 200-DMA se +2.2%) par aaj koi naya qualifying setup nahi \u2014 0 position hold karo. Naye signal ka intezaar; force karke trade mat dhoondo."
+  },
+  {
+    "date": "2026-11-06",
+    "regime": "UP \u2705 (trades allowed)",
+    "regime_up": true,
+    "positions_held": 0,
+    "free_slots": 5,
+    "buys": [],
+    "sells": [],
+    "idle_cash": 50000.0,
+    "cash_after_buys": 50000.0,
+    "cash_action": {
+      "where": "NIFTYBEES (Nifty 50 ETF)",
+      "why": "Market UP hai \u2014 idle cash ETF mein rakho taaki market ke saath badhe (overlay).",
+      "note": "Jab agla stock BUY signal aaye, utna NIFTYBEES bech ke stock kharidna."
+    },
+    "overlay": "NIFTYBEES",
+    "nifty": 25030.3,
+    "nifty_200dma": 23998.9,
+    "commentary": "Market uptrend mein hai (Nifty 200-DMA se +4.3%) par aaj koi naya qualifying setup nahi \u2014 0 position hold karo. Naye signal ka intezaar; force karke trade mat dhoondo."
   }
 ]
