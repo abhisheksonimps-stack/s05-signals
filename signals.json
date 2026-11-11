@@ -1,5 +1,5 @@
 {
-  "date": "2026-11-09",
+  "date": "2026-11-11",
   "regime": "UP \u2705 (trades allowed)",
   "regime_up": true,
   "positions_held": 0,
@@ -14,7 +14,7 @@
     "note": "Jab agla stock BUY signal aaye, utna NIFTYBEES bech ke stock kharidna."
   },
   "overlay": "NIFTYBEES",
-  "nifty": 25044.7,
-  "nifty_200dma": 23995.8,
-  "commentary": "Market uptrend mein hai (Nifty 200-DMA se +4.4%) par aaj koi naya qualifying setup nahi \u2014 0 position hold karo. Naye signal ka intezaar; force karke trade mat dhoondo."
+  "nifty": 25255.1,
+  "nifty_200dma": 23993.6,
+  "commentary": "Market uptrend mein hai (Nifty 200-DMA se +5.3%) par aaj koi naya qualifying setup nahi \u2014 0 position hold karo. Naye signal ka intezaar; force karke trade mat dhoondo."
 }
