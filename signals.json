@@ -1,20 +1,30 @@
 {
-  "date": "2026-11-13",
+  "date": "2026-11-16",
   "regime": "UP \u2705 (trades allowed)",
   "regime_up": true,
   "positions_held": 0,
   "free_slots": 5,
-  "buys": [],
+  "buys": [
+    {
+      "symbol": "KOTAKBANK",
+      "price": 494.2,
+      "shares": 12,
+      "stop": 463.72,
+      "value": 5930.0,
+      "momentum_6m": 29.2,
+      "pct_from_52wh": 0.0
+    }
+  ],
   "sells": [],
   "idle_cash": 50000.0,
-  "cash_after_buys": 50000.0,
+  "cash_after_buys": 44070.0,
   "cash_action": {
     "where": "NIFTYBEES (Nifty 50 ETF)",
     "why": "Market UP hai \u2014 idle cash ETF mein rakho taaki market ke saath badhe (overlay).",
     "note": "Jab agla stock BUY signal aaye, utna NIFTYBEES bech ke stock kharidna."
   },
   "overlay": "NIFTYBEES",
-  "nifty": 25144.3,
-  "nifty_200dma": 23991.8,
-  "commentary": "Market uptrend mein hai (Nifty 200-DMA se +4.8%) par aaj koi naya qualifying setup nahi \u2014 0 position hold karo. Naye signal ka intezaar; force karke trade mat dhoondo."
+  "nifty": 25291.1,
+  "nifty_200dma": 23992.4,
+  "commentary": "Market uptrend mein hai (Nifty 200-DMA se +5.4%). Aaj 1 naya momentum leader signal mein aaya: KOTAKBANK. Ye 52-week high ke paas, top-quartile momentum wale stocks hain. Stop-loss zaroor lagao jaisa signal mein diya hai \u2014 risk har trade pe sirf 0.75% rakha gaya hai."
 }
