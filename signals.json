@@ -1,20 +1,39 @@
 {
-  "date": "2026-11-17",
+  "date": "2026-11-18",
   "regime": "UP \u2705 (trades allowed)",
   "regime_up": true,
   "positions_held": 0,
   "free_slots": 5,
-  "buys": [],
+  "buys": [
+    {
+      "symbol": "ICICIBANK",
+      "price": 1601.3,
+      "shares": 4,
+      "stop": 1509.55,
+      "value": 6405.0,
+      "momentum_6m": 29.1,
+      "pct_from_52wh": 0.0
+    },
+    {
+      "symbol": "GAIL",
+      "price": 190.0,
+      "shares": 31,
+      "stop": 178.07,
+      "value": 5890.0,
+      "momentum_6m": 18.9,
+      "pct_from_52wh": 0.0
+    }
+  ],
   "sells": [],
   "idle_cash": 50000.0,
-  "cash_after_buys": 50000.0,
+  "cash_after_buys": 37705.0,
   "cash_action": {
     "where": "NIFTYBEES (Nifty 50 ETF)",
     "why": "Market UP hai \u2014 idle cash ETF mein rakho taaki market ke saath badhe (overlay).",
     "note": "Jab agla stock BUY signal aaye, utna NIFTYBEES bech ke stock kharidna."
   },
   "overlay": "NIFTYBEES",
-  "nifty": 25387.4,
-  "nifty_200dma": 23992.9,
-  "commentary": "Market uptrend mein hai (Nifty 200-DMA se +5.8%) par aaj koi naya qualifying setup nahi \u2014 0 position hold karo. Naye signal ka intezaar; force karke trade mat dhoondo."
+  "nifty": 25227.9,
+  "nifty_200dma": 23993.8,
+  "commentary": "Market uptrend mein hai (Nifty 200-DMA se +5.1%). Aaj 2 naya momentum leader signal mein aaya: ICICIBANK, GAIL. Ye 52-week high ke paas, top-quartile momentum wale stocks hain. Stop-loss zaroor lagao jaisa signal mein diya hai \u2014 risk har trade pe sirf 0.75% rakha gaya hai."
 }
