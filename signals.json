@@ -1,20 +1,30 @@
 {
-  "date": "2026-11-19",
+  "date": "2026-11-20",
   "regime": "UP \u2705 (trades allowed)",
   "regime_up": true,
   "positions_held": 0,
   "free_slots": 5,
-  "buys": [],
+  "buys": [
+    {
+      "symbol": "UNIONBANK",
+      "price": 218.85,
+      "shares": 23,
+      "stop": 203.0,
+      "value": 5034.0,
+      "momentum_6m": 41.7,
+      "pct_from_52wh": 0.0
+    }
+  ],
   "sells": [],
   "idle_cash": 50000.0,
-  "cash_after_buys": 50000.0,
+  "cash_after_buys": 44966.0,
   "cash_action": {
     "where": "NIFTYBEES (Nifty 50 ETF)",
     "why": "Market UP hai \u2014 idle cash ETF mein rakho taaki market ke saath badhe (overlay).",
     "note": "Jab agla stock BUY signal aaye, utna NIFTYBEES bech ke stock kharidna."
   },
   "overlay": "NIFTYBEES",
-  "nifty": 25514.3,
-  "nifty_200dma": 23995.5,
-  "commentary": "Market uptrend mein hai (Nifty 200-DMA se +6.3%) par aaj koi naya qualifying setup nahi \u2014 0 position hold karo. Naye signal ka intezaar; force karke trade mat dhoondo."
+  "nifty": 25800.6,
+  "nifty_200dma": 23997.8,
+  "commentary": "Market uptrend mein hai (Nifty 200-DMA se +7.5%). Aaj 1 naya momentum leader signal mein aaya: UNIONBANK. Ye 52-week high ke paas, top-quartile momentum wale stocks hain. Stop-loss zaroor lagao jaisa signal mein diya hai \u2014 risk har trade pe sirf 0.75% rakha gaya hai."
 }
